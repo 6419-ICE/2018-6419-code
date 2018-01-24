@@ -30,16 +30,26 @@ private    DifferentialDrive drive;
 		super(1, 0, 0);
 		initChassis();
 		initGyro();
-		drive = new DifferentialDrive(left, right);
 		setPercentTolerance(5);
-		
+		setInputRange(-180, 180);
+		setOutputRange(-1, 1);
+		getPIDController().setContinuous(false);
+
 	}
-	
+	public void initTeleop() {
+		drive = new DifferentialDrive(left, right);
+
+	}
     public void initDefaultCommand() {
     	 
         
     	// Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    }
+    public void drive(double speed) {
+    	SmartDashboard.putNumber("power", speed);
+    	left.set(speed);
+    	right.set(speed);
     }
     /**
      * 
@@ -61,13 +71,19 @@ private    DifferentialDrive drive;
 
 		gyro.calibrate();
     }    
+    @Override
+    public void periodic() {
+    	SmartDashboard.putData(getPIDController());
+    }
     private void initChassis() {
 		frontLeft = new VictorSP(RobotMap.FRONT_LEFT_DRIVE);
+		frontLeft.setInverted(false);
 		backLeft = new VictorSP(RobotMap.BACK_LEFT_DRIVE);
+		backLeft.setInverted(false);
 		rightFront = new VictorSP(RobotMap.RIGHT_FRONT_DRIVE);
+		rightFront.setInverted(false);
 		rightBack = new VictorSP(RobotMap.RIGHT_BACK_DRIVE);
-		rightFront.setInverted(true);
-		backLeft.setInverted(true);
+		rightBack.setInverted(false);
 		left = new SpeedControllerGroup(frontLeft, backLeft);
 		right = new SpeedControllerGroup(rightFront,rightBack );
 		left.setInverted(true);
@@ -97,8 +113,9 @@ private    DifferentialDrive drive;
 
 	@Override
 	protected void usePIDOutput(double output) {
-		left.set(output);
-		right.set(-output);
+		left.pidWrite(-output);
+		right.pidWrite(-output);
+		SmartDashboard.putNumber("PID: ", output);
 	}
     
     

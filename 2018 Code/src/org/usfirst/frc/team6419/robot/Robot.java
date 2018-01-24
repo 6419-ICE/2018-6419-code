@@ -87,14 +87,16 @@ public class Robot extends TimedRobot {
 		m_autonomousCommand = m_chooser.getSelected();
 		 String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		 char switchPosition, scalePosition, opponentSwitchLocation;
-		 
+	try {	 
 		 switchPosition = gameData.charAt(0);
 		 scalePosition = gameData.charAt(1);
 		 opponentSwitchLocation = gameData.charAt(2);
 		 ScaleInformation.setSWITCH_LOCATION(switchPosition);
 		 ScaleInformation.setSCALE_LOCATION(scalePosition);
 		 ScaleInformation.setOPPONENT_SWITCH_LOCATION(opponentSwitchLocation);
-
+	}catch(StringIndexOutOfBoundsException e) {
+		
+	}
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand

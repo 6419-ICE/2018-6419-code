@@ -17,6 +17,7 @@ public class TeleopCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.chassis.initTeleop();
     }
 
     // Called repeatedly when this Command is scheduled to run
