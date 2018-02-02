@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team6419.robot.commands.AutonomousCommandGroup;
 import org.usfirst.frc.team6419.robot.commands.TeleopCommand;
 import org.usfirst.frc.team6419.robot.subsystems.Chassis;
+import org.usfirst.frc.team6419.robot.subsystems.Elevator;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,7 +28,7 @@ import org.usfirst.frc.team6419.robot.subsystems.Chassis;
  */
 public class Robot extends TimedRobot {
 	public static Chassis chassis;
-	
+	public static Elevator elevator;
 	public static OI m_oi;
 	TeleopCommand command;
 	Command m_autonomousCommand;
@@ -47,7 +48,7 @@ public class Robot extends TimedRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 
 		chassis = new Chassis();
-		
+		elevator = new Elevator();
 		m_chooser.addDefault("Default Auto", new AutonomousCommandGroup());
 		m_chooser.addObject("name" , new AutonomousCommandGroup());
 

@@ -19,6 +19,8 @@ private	 VictorSP frontLeft;
 private	 VictorSP backLeft;
 private	 VictorSP rightFront;
 private	 VictorSP rightBack;
+
+
 private	 SpeedControllerGroup left, right;
 private    DifferentialDrive drive;
 	 // Put methods for controlling this subsystem
@@ -66,6 +68,7 @@ private    DifferentialDrive drive;
 		right = new SpeedControllerGroup(rightFront,rightBack );
 		left.setInverted(true);
 		right.setInverted(true);
+		
     }
    
     public double getHeading() {

@@ -13,6 +13,7 @@ public class TeleopCommand extends Command {
 	
     public TeleopCommand() {
     	requires(Robot.chassis);
+    	requires(Robot.elevator);
     }
 
     // Called just before this Command runs the first time
@@ -22,8 +23,10 @@ public class TeleopCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Joystick drive = Robot.m_oi.joystick;
+    	Joystick lift = Robot.m_oi.joystick2;
     	Robot.chassis.arcadeDrive(drive.getRawAxis(1), drive.getRawAxis(2));
     	SmartDashboard.putNumber("Gyro heading", Robot.chassis.getHeading());
+    	Robot.elevator.moveLift(lift.getRawAxis(1));
     }
 
     // Make this return true when this Command no longer needs to run execute()
