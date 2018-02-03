@@ -49,8 +49,8 @@ public class Robot extends TimedRobot {
 
 		chassis = new Chassis();
 		elevator = new Elevator();
-		m_chooser.addDefault("Default Auto", new AutonomousCommandGroup());
-		m_chooser.addObject("name" , new AutonomousCommandGroup());
+		//m_chooser.addDefault("Default Auto", new AutonomousCommandGroup());
+		//m_chooser.addObject("name" , new AutonomousCommandGroup());
 
 		command = new TeleopCommand();
 
