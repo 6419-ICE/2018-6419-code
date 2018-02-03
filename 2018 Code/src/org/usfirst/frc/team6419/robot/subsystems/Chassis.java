@@ -58,13 +58,13 @@ private    DifferentialDrive drive;
 		gyro.calibrate();
     }    
     private void initChassis() {
-		frontLeft = new VictorSP(RobotMap.FRONT_LEFT_DRIVE);
-		backLeft = new VictorSP(RobotMap.BACK_LEFT_DRIVE);
+		frontLeft = new VictorSP(RobotMap.LEFT_FRONT_DRIVE);
+		backLeft = new VictorSP(RobotMap.LEFT_BACK_DRIVE);
 		rightFront = new VictorSP(RobotMap.RIGHT_FRONT_DRIVE);
 		rightBack = new VictorSP(RobotMap.RIGHT_BACK_DRIVE);
-		rightFront.setInverted(true);
-		backLeft.setInverted(true);
 		left = new SpeedControllerGroup(frontLeft, backLeft);
+		rightFront.setInverted(false);
+		backLeft.setInverted(false);
 		right = new SpeedControllerGroup(rightFront,rightBack );
 		left.setInverted(true);
 		right.setInverted(true);

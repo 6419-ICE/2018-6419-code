@@ -18,12 +18,12 @@ import edu.wpi.first.wpilibj.VictorSP;
  */
 public class RobotMap {
 	//Port numbers
-		public static int FRONT_LEFT_DRIVE = 1; 
-		public static int RIGHT_FRONT_DRIVE = 0;
-		public static int RIGHT_BACK_DRIVE = 2;
-		public static int BACK_LEFT_DRIVE = 3;
-		public static int UP_LIFT = 4;
-		public static int DOWN_LIFT = 5;
+		public static int LEFT_FRONT_DRIVE = 3; //correct 
+		public static int RIGHT_FRONT_DRIVE = 2; //correct
+		public static int RIGHT_BACK_DRIVE = 0;//correct
+		public static int LEFT_BACK_DRIVE = 1;//correct
+		public static int UP_LIFT = 5;
+		public static int DOWN_LIFT = 4;
 	//Motors themselves
 	
 	// For example to map the left and right motors, you could define the
