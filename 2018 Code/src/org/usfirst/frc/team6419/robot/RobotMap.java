@@ -22,6 +22,11 @@ public class RobotMap {
 		public static int FRONT_LEFT_DRIVE = 3; 
 		public static int RIGHT_BACK_DRIVE = 0;
 		public static int RIGHT_FRONT_DRIVE = 2;
+		
+		public static int INTAKE_LEFT_WHEEL = 4;
+		public static int INTAKE_RIGHT_WHEEL = 5;
+		
+		public static int LIFT = 6;
 	//Motors themselves
 	
 	// For example to map the left and right motors, you could define the
