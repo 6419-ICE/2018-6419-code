@@ -26,8 +26,8 @@ public class TeleopCommand extends Command {
     protected void execute() {
     	Joystick drive = Robot.m_oi.joystick;
     	Joystick lift = Robot.m_oi.joystick2;
-    	double driveThrottle = ((Math.abs((drive.getThrottle()+1)))/2);
-    	Robot.chassis.arcadeDrive(drive.getRawAxis(1)*driveThrottle, drive.getRawAxis(2));
+    	double driveThrottle = (Math.abs((drive.getThrottle()+3)));
+    	Robot.chassis.arcadeDrive(drive.getRawAxis(1)/driveThrottle, drive.getRawAxis(2));
     	SmartDashboard.putNumber("Gyro heading", Robot.chassis.getHeading());
     	SmartDashboard.putNumber("Drive Throttle", ((4.55*drive.getThrottle())+(16/3)));
     	SmartDashboard.updateValues();
