@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+
 /**
  *
  */
@@ -13,18 +14,25 @@ public class TeleopCommand extends Command {
 	
     public TeleopCommand() {
     	requires(Robot.chassis);
+    	requires(Robot.elevator);
     }
+    
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.chassis.initTeleop();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Joystick drive = Robot.m_oi.joystick;
-    	Robot.chassis.arcadeDrive(drive.getRawAxis(1), drive.getRawAxis(2));
+    	Joystick lift = Robot.m_oi.joystick2;
+    	double driveThrottle = (Math.abs((drive.getThrottle()+3)));
+    	Robot.chassis.arcadeDrive(drive.getRawAxis(1)/driveThrottle, drive.getRawAxis(2));
     	SmartDashboard.putNumber("Gyro heading", Robot.chassis.getHeading());
+    	SmartDashboard.putNumber("Drive Throttle", ((4.55*drive.getThrottle())+(16/3)));
+    	SmartDashboard.updateValues();
+    	Robot.elevator.moveLift(lift.getRawAxis(1));
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

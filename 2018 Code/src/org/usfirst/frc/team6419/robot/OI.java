@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	public Joystick joystick = new Joystick(0);
+	public Joystick joystick2 = new Joystick(1);
 	
 	public OI() {
 		JoystickButton dpadUp = new JoystickButton(joystick, 5);
@@ -28,6 +29,8 @@ public class OI {
 		JoystickButton r2 = new JoystickButton(joystick, 10);
 		JoystickButton l1 = new JoystickButton(joystick, 11);
 		JoystickButton r1 = new JoystickButton(joystick, 12);
+		
+		
 		
 	}
 	

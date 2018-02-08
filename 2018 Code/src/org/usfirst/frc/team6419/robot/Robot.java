@@ -9,7 +9,6 @@ package org.usfirst.frc.team6419.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -18,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team6419.robot.commands.AutonomousCommandGroup;
 import org.usfirst.frc.team6419.robot.commands.TeleopCommand;
 import org.usfirst.frc.team6419.robot.subsystems.Chassis;
+import org.usfirst.frc.team6419.robot.subsystems.Elevator;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,9 +27,8 @@ import org.usfirst.frc.team6419.robot.subsystems.Chassis;
  * project.
  */
 public class Robot extends TimedRobot {
-	
 	public static Chassis chassis;
-	
+	public static Elevator elevator;
 	public static OI m_oi;
 	TeleopCommand command;
 	Command m_autonomousCommand;
@@ -49,9 +48,9 @@ public class Robot extends TimedRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 
 		chassis = new Chassis();
-		
-		m_chooser.addDefault("Default Auto", new AutonomousCommandGroup());
-		m_chooser.addObject("name" , new AutonomousCommandGroup());
+		elevator = new Elevator();
+		//m_chooser.addDefault("Default Auto", new AutonomousCommandGroup());
+		//m_chooser.addObject("name" , new AutonomousCommandGroup());
 
 		command = new TeleopCommand();
 
@@ -89,16 +88,14 @@ public class Robot extends TimedRobot {
 		m_autonomousCommand = m_chooser.getSelected();
 		 String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		 char switchPosition, scalePosition, opponentSwitchLocation;
-	try {	 
+		 
 		 switchPosition = gameData.charAt(0);
 		 scalePosition = gameData.charAt(1);
 		 opponentSwitchLocation = gameData.charAt(2);
 		 ScaleInformation.setSWITCH_LOCATION(switchPosition);
 		 ScaleInformation.setSCALE_LOCATION(scalePosition);
 		 ScaleInformation.setOPPONENT_SWITCH_LOCATION(opponentSwitchLocation);
-	}catch(StringIndexOutOfBoundsException e) {
-		
-	}
+
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
