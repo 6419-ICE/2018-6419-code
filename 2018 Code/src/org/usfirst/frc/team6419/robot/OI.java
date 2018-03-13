@@ -7,10 +7,12 @@
 
 package org.usfirst.frc.team6419.robot;
 
+import org.usfirst.frc.team6419.robot.commands.UseClaw;
 import org.usfirst.frc.team6419.robot.triggers.ExampleTrigger;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -20,19 +22,26 @@ public class OI {
 	public Joystick joystick = new Joystick(0);
 	public Joystick joystick2 = new Joystick(1);
 	
+	public JoystickButton button12;
 	public OI() {
-		JoystickButton dpadUp = new JoystickButton(joystick, 5);
-		JoystickButton dpadRight = new JoystickButton(joystick, 6);
-		JoystickButton dpadDown = new JoystickButton(joystick, 7);
-		JoystickButton dpadLeft = new JoystickButton(joystick, 8);
-		JoystickButton l2 = new JoystickButton(joystick, 9);
-		JoystickButton r2 = new JoystickButton(joystick, 10);
-		JoystickButton l1 = new JoystickButton(joystick, 11);
-		JoystickButton r1 = new JoystickButton(joystick, 12);
+
+		button12 = new JoystickButton(joystick2, 12);
+		JoystickButton button11 = new JoystickButton(joystick2, 11);
+		button11.whileActive(new UseClaw(false));
+		button12.whileActive(new UseClaw(true));
 		
 		
 		
 	}
+	public Joystick getDriverStick() {
+		return joystick;
+	}
+	public Joystick getElevatorStick() {
+		return joystick2;
+	}
+}
+
+
 	
 	
 	
@@ -64,4 +73,3 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	
-}

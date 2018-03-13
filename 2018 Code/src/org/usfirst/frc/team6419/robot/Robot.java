@@ -7,17 +7,25 @@
 
 package org.usfirst.frc.team6419.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team6419.robot.commands.AutonomousCommandGroup;
+import org.usfirst.frc.team6419.robot.commands.GameAuto;
 import org.usfirst.frc.team6419.robot.commands.TeleopCommand;
+import org.usfirst.frc.team6419.robot.commands.TestEncoder;
+import org.usfirst.frc.team6419.robot.commands.TestGyroPid;
 import org.usfirst.frc.team6419.robot.subsystems.Chassis;
+import org.usfirst.frc.team6419.robot.subsystems.Claw;
 import org.usfirst.frc.team6419.robot.subsystems.Elevator;
+import org.usfirst.frc.team6419.robot.subsystems.Intake;
+import org.usfirst.frc.team6419.robot.subsystems.TopIntake;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,10 +37,13 @@ import org.usfirst.frc.team6419.robot.subsystems.Elevator;
 public class Robot extends TimedRobot {
 	public static Chassis chassis;
 	public static Elevator elevator;
+//	public static Claw claw;
+	public static Intake intake;
+	public static TopIntake topIntake;
 	public static OI m_oi;
 	TeleopCommand command;
 	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	SendableChooser<Command> m_chooser;
 	
 	
 
@@ -43,17 +54,30 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		
-		m_oi = new OI();
 		
 
 		chassis = new Chassis();
 		elevator = new Elevator();
-		m_chooser.addDefault("Default Auto", new AutonomousCommandGroup());
-		m_chooser.addObject("name" , new AutonomousCommandGroup());
+		intake = new Intake();
+	//	claw = new Claw();
+		topIntake = new TopIntake();
+		m_oi = new OI();
 
+		m_chooser = new SendableChooser<Command>();
+	m_chooser.addObject("Test Gyro", new TestGyroPid());
+		m_chooser.addObject("Test Encoder", new TestEncoder());
+		SmartDashboard.putData("Chooser:", m_chooser);
 		command = new TeleopCommand();
+		LiveWindow.add(chassis);
+		LiveWindow.add(elevator);
+		LiveWindow.add(intake);
+		LiveWindow.add(topIntake);
+	//	LiveWindow.add(claw);
+	//	System.out.println("adding chooser");
+		//CameraServer.getInstance().startAutomaticCapture();
+		System.out.println("AUTO CHOOSER: " + m_chooser);
+		m_autonomousCommand =(Command) m_chooser.getSelected();
 
-		SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
 	/**
@@ -63,6 +87,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		SmartDashboard.putData("Auto mode", m_chooser);
 
 	}
 
@@ -84,9 +109,12 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		chassis.resetGyro();
 		m_autonomousCommand = m_chooser.getSelected();
 		 String gameData = DriverStation.getInstance().getGameSpecificMessage();
-		 char switchPosition, scalePosition, opponentSwitchLocation;
+		ScaleInformation.setPOSITION( DriverStation.getInstance().getLocation());
+		ScaleInformation.setAlliance(DriverStation.getInstance().getAlliance());
+		char switchPosition, scalePosition, opponentSwitchLocation;
 		 
 		 switchPosition = gameData.charAt(0);
 		 scalePosition = gameData.charAt(1);
@@ -118,13 +146,14 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		chassis.resetGyro();
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.cancel();
-		}
+	//	if (m_autonomousCommand != null) {
+		//	m_autonomousCommand.cancel();
+		//}
 		if(command != null) command.start();
 		
 	}
@@ -142,5 +171,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+	
 	}
 }

@@ -3,7 +3,10 @@ package org.usfirst.frc.team6419.robot.commands;
 import org.usfirst.frc.team6419.robot.Robot;
 import org.usfirst.frc.team6419.robot.OI;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick.ButtonType;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -11,27 +14,55 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class TeleopCommand extends Command {
-	
+	DifferentialDrive chassisDrive;
+	ManualElevator liftCommand;
     public TeleopCommand() {
     	requires(Robot.chassis);
     	requires(Robot.elevator);
+    	requires(Robot.topIntake);
+    	liftCommand = new ManualElevator();
     }
     
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.chassis.disable();
+    	liftCommand.initialize();
+    	Robot.chassis.resetEncoders();
+    	chassisDrive = Robot.chassis.getDrive();
+    	Robot.chassis.initTeleop();
+
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Joystick drive = Robot.m_oi.joystick;
-    	Joystick lift = Robot.m_oi.joystick2;
+
+    	Joystick drive = Robot.m_oi.getDriverStick();
     	double driveThrottle = (Math.abs((drive.getThrottle()+2)));
-    	Robot.chassis.arcadeDrive(drive.getRawAxis(1)/driveThrottle, drive.getRawAxis(2)/driveThrottle);
-    	SmartDashboard.putNumber("Gyro heading", Robot.chassis.getHeading());
+    	driveThrottle = Math.sqrt(driveThrottle);
+    	
+    	
+    	chassisDrive.arcadeDrive(-drive.getRawAxis(1)/driveThrottle, drive.getRawAxis(2)/driveThrottle, true);
+    
+    	liftCommand.teleopControls();
+    	liftCommand.execute();
+    	if(drive.getRawButton(9))
+    		Robot.topIntake.set(.7);
+    	else if (drive.getRawButton(10))
+    		Robot.topIntake.set(-.7);
+    	else
+    		Robot.topIntake.stop();
+    	SmartDashboard.putNumber("Left Encoder: ", Robot.chassis.getLeftDistance());
+    	SmartDashboard.putNumber("Right Encoder", Robot.chassis.getRightDistance());
+    	
+    	SmartDashboard.putData(chassisDrive);
+SmartDashboard.putNumber("Gyro heading", Robot.chassis.getHeading());
     	SmartDashboard.putNumber("Drive Throttle", driveThrottle);
     	SmartDashboard.updateValues();
-    	Robot.elevator.moveLift(lift.getRawAxis(1));
+    
+    	
+    }
+    public void teleopControls() {
     	
     }
 
@@ -47,5 +78,7 @@ public class TeleopCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	
     }
+    
 }

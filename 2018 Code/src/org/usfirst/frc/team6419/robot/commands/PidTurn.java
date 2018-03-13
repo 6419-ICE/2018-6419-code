@@ -4,38 +4,40 @@ import org.usfirst.frc.team6419.robot.Robot;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class PidTurn extends Command {
-PIDController pid;
-    public PidTurn() {
-    	requires(Robot.chassis);
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    }
+double degrees;
+	public PidTurn(double degrees) {
+		this.degrees = degrees;
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	
-    }
+		
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    }
+		@Override
+		public void initialize() {
+			Robot.chassis.initGyroPid();
+			Robot.chassis.enable();
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+			Robot.chassis.setSetpoint(degrees);
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+		}
+		@Override 
+		public void execute() {
+			System.out.println("PidTurn");
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+			SmartDashboard.putNumber("Chassis Output", Robot.chassis.getPosition());
+			
+		}
+		@Override
+		public boolean isFinished() {
+			return Robot.chassis.onTarget();
+		}
+		public void stop() {
+			Robot.chassis.disable();
+		}
 }

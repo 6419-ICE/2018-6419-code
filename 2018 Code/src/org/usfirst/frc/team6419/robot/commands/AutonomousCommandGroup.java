@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutonomousCommandGroup extends CommandGroup {
 	public AutonomousCommandGroup() {
-		addSequential(new DriveStraight(1000, .5));
+		//hopefully Drives 30 inches forward.
+		addSequential(new PidTurn(90));
 		
 		//test commit
 	}
