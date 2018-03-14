@@ -25,11 +25,12 @@ private	 WPI_VictorSPX leftBack, rightBack;
 private WPI_TalonSRX leftFront, rightFront;
 
 	public Chassis() {
-		super("Chassis", .0275, 0, 0);
+		super("Chassis", .0275, .005, 0);
 		initChassis();
 		initGyro();
 	
-		this.setAbsoluteTolerance(2);
+		this.setAbsoluteTolerance(6);
+		initDrivePid();
 
 		SmartDashboard.putData(this);
 	}
@@ -51,7 +52,11 @@ private WPI_TalonSRX leftFront, rightFront;
   		rightBack = new WPI_VictorSPX(RobotMap.RIGHT_BACK_DRIVE);
   		
   		rightBack.follow(rightFront);
-  	
+
+leftFront.setSafetyEnabled(false);
+rightFront.setSafetyEnabled(false);
+leftBack.setSafetyEnabled(false);
+rightBack.setSafetyEnabled(false);
       }
  
     
@@ -100,8 +105,8 @@ private WPI_TalonSRX leftFront, rightFront;
 		gyro.setPIDSourceType(PIDSourceType.kDisplacement);
 
 		gyro.calibrate();
-		this.setOutputRange(-.5, .5);
-		this.setAbsoluteTolerance(5);
+		this.setOutputRange(-1, 1);
+		this.setAbsoluteTolerance(6);
     }    
     public double getHeading() {
     	return gyro.getAngle();
@@ -112,11 +117,11 @@ private WPI_TalonSRX leftFront, rightFront;
 
 public void initGyroPid() {
 	this.leftBack.follow(leftFront);
-	leftBack.setInverted(false);
-	leftFront.setInverted(false);
+//	leftBack.setInverted(false);
+//	leftFront.setInverted(false);
 	rightBack.follow(rightFront);
-	rightBack.setInverted(true);
-	rightFront.setInverted(true);
+//	rightBack.setInverted(true);
+//	rightFront.setInverted(true);
 	this.setOutputRange(-.5, .5);
 }
 public void initDrivePid() {
@@ -156,16 +161,12 @@ rightFront.config_kD(pidSlot, 0.0, timeout);
  */
 
 
-leftFront.setSafetyEnabled(false);
-rightFront.setSafetyEnabled(false);
-leftBack.setSafetyEnabled(false);
-rightBack.setSafetyEnabled(false);
 }
 public void initEncoderDriveMotors() {
-	leftFront.setInverted(false);
-	leftBack.setInverted(false);
-	leftFront.setInverted(false);
-	rightFront.setInverted(false);
+//	leftFront.setInverted(false);
+//	leftBack.setInverted(false);
+//	leftFront.setInverted(false);
+//	rightFront.setInverted(false);
 	leftBack.follow(leftFront);
 	//leftFront.follow(rightFront);
 	rightBack.follow(rightFront);
@@ -198,10 +199,10 @@ public DifferentialDrive getDrive() {
 	return new DifferentialDrive(leftFront, rightFront);
 }
 public void initTeleop() {
-	leftFront.setInverted(false);
-	rightFront.setInverted(false);
-	leftBack.setInverted(false);
-	rightBack.setInverted(false);
+//	leftFront.setInverted(false);
+//	rightFront.setInverted(false);
+//	leftBack.setInverted(false);
+//	rightBack.setInverted(false);
 	leftBack.follow(leftFront);
 	rightBack.follow(rightFront);
 }
@@ -214,10 +215,10 @@ protected double returnPIDInput() {
 
 @Override
 protected void usePIDOutput(double output) {
-	System.out.println("\n\n\tleft power: "+output +" Right power: " + -output + "\n\n \t left inverted: "+ leftFront.getInverted() + " Right inverted: " + rightFront.getInverted());
-	SmartDashboard.putNumber("Pid output", output);
+	System.out.println("Error: " +this.getPIDController().getError());
+
 	leftFront.pidWrite(output);
-	rightFront.pidWrite(-output);
+	rightFront.pidWrite(output);
 //	leftFront.set(ControlMode.PercentOutput, output);
 //	rightFront.set(ControlMode.PercentOutput, -output);
 }
@@ -249,8 +250,8 @@ public double getRightDistance() {
 	return rightFront.getSelectedSensorPosition(0);
 }
 public void resetEncoders() {
-	leftFront.setSelectedSensorPosition(0, 0, 10);
-	rightFront.setSelectedSensorPosition(0, 0, 10);
+	leftFront.setSelectedSensorPosition(0, 0, 0);
+	rightFront.setSelectedSensorPosition(0, 0, 0);
 }
 
 public double getAverageSpeed() {

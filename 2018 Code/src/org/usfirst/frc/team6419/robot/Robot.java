@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
 	public static OI m_oi;
 	TeleopCommand command;
 	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser;
+	SendableChooser<String> m_chooser;
 	
 	
 
@@ -63,9 +63,10 @@ public class Robot extends TimedRobot {
 		topIntake = new TopIntake();
 		m_oi = new OI();
 
-		m_chooser = new SendableChooser<Command>();
-	m_chooser.addObject("Test Gyro", new TestGyroPid());
-		m_chooser.addObject("Test Encoder", new TestEncoder());
+		m_chooser = new SendableChooser<>();
+
+		m_chooser.addObject("Test Gyro", "TGP");
+			m_chooser.addObject("Test Encoder", "TE");
 		SmartDashboard.putData("Chooser:", m_chooser);
 		command = new TeleopCommand();
 		LiveWindow.add(chassis);
@@ -76,8 +77,7 @@ public class Robot extends TimedRobot {
 	//	System.out.println("adding chooser");
 		//CameraServer.getInstance().startAutomaticCapture();
 		System.out.println("AUTO CHOOSER: " + m_chooser);
-		m_autonomousCommand =(Command) m_chooser.getSelected();
-
+//		m_autonomousCommand =(Command) m_chooser.getSelected();
 	}
 
 	/**
@@ -109,8 +109,19 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+
+//		m_chooser.addObject("Test Gyro", new TestGyroPid());
+//			m_chooser.addObject("Test Encoder", new TestEncoder());
 		chassis.resetGyro();
-		m_autonomousCommand = m_chooser.getSelected();
+//		m_autonomousCommand = m_chooser.getSelected();
+		switch (m_chooser.getSelected()) {
+		case "TGP":
+			m_autonomousCommand = new TestGyroPid();
+			break;
+		case "TE":
+			m_autonomousCommand = new TestEncoder();
+			break;
+		}
 		 String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		ScaleInformation.setPOSITION( DriverStation.getInstance().getLocation());
 		ScaleInformation.setAlliance(DriverStation.getInstance().getAlliance());

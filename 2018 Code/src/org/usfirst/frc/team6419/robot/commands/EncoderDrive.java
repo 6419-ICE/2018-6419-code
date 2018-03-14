@@ -26,25 +26,31 @@ public class EncoderDrive extends Command {
     protected void initialize() {
     	System.out.println("Encoder Drive Starting");
     	Robot.chassis.resetEncoders();
+    	Robot.chassis.resetEncoders();
+    	Robot.chassis.resetEncoders();
+    	Robot.chassis.resetEncoders();
     	Robot.chassis.initEncoderDriveMotors();
-    	Robot.chassis.initDrivePid();
-    	
+    	Robot.chassis.startDrivePid(distance);
+
+    	//Robot.chassis.initDrivePid();
+
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.chassis.startDrivePid(distance);
+
     	SmartDashboard.putNumber("Encoder Drive Error: ", Robot.chassis.getAverageError());
     	SmartDashboard.putNumber("Left Encoder: ", Robot.chassis.getLeftDistance());
     	SmartDashboard.putNumber("Right Encoder", Robot.chassis.getRightDistance());
 
-    	Robot.chassis.startDrivePid(distance);
 
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Math.abs(Robot.chassis.getAverageError()) < 50;
+    	return Math.abs(Robot.chassis.getRightError()) < 20;
     	//   	return Robot.chassis.getAverageError() < 400;
     	//    	return Robot.chassis.getError() < 3 && Robot.chassis.getError() > -3;
         

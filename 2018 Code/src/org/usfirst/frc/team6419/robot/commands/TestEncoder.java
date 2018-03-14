@@ -3,6 +3,7 @@ package org.usfirst.frc.team6419.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.WaitCommand;
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  *
@@ -10,9 +11,11 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 public class TestEncoder extends CommandGroup {
 
     public TestEncoder() {
-   // 	addSequential(new PidTurn(30));
-    	addSequential(new PidTurn(50));
-
+    	addSequential(new EncoderDrive(-10));
+    	addSequential(new Wait(1));
+    	addSequential(new PidTurn((DriverStation.getInstance().getGameSpecificMessage().charAt(0) == 'L')?
+    			30 : -30));
+    	addSequential(new Wait(1));
     	addSequential(new EncoderDrive(-60));
     	// Add Commands here:
         // e.g. addSequential(new Command1());

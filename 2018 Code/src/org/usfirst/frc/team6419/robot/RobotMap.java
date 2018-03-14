@@ -23,13 +23,13 @@ public class RobotMap {
 		public static final int RIGHT_BACK_DRIVE = 3;//correct
 		public static final int LEFT_BACK_DRIVE = 4;//correct
 		
-		public static final int UP_LIFT = 7;
+		public static final int UP_LIFT = 6;
 		public static final int DOWN_LIFT = 9;
 		public static final int LEFT_INTAKE = 4;
 		public static final int RIGHT_INTAKE = 5;
 	//	public static int GRIPPY_THINGY = 6;
 		
-		public static final int TOP_INTAKE_MOTOR = 6;
+		public static final int TOP_INTAKE_MOTOR = 7;
 		
 		public static final int LIFT_ENCODER_CHANNEL_A = 0;
 		public static final int LIFT_ENCODER_CHANNEL_B = 1;

@@ -28,16 +28,18 @@ double degrees;
 		}
 		@Override 
 		public void execute() {
-			System.out.println("PidTurn");
 
 			SmartDashboard.putNumber("Chassis Output", Robot.chassis.getPosition());
 			
 		}
 		@Override
 		public boolean isFinished() {
-			return Robot.chassis.onTarget();
+			return Math.abs(Robot.chassis.getPIDController().getError()) < 5;
+//			return Robot.chassis.onTarget();
 		}
-		public void stop() {
+		@Override
+		public void end() {
 			Robot.chassis.disable();
+			Robot.chassis.stop();
 		}
 }
