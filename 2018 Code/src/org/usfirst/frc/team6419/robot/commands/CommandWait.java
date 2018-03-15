@@ -1,19 +1,23 @@
 package org.usfirst.frc.team6419.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
+import edu.wpi.first.wpilibj.Timer;
 /**
  *
  */
-public class Dump extends Command {
-
-    public Dump() {
+public class CommandWait extends Command {
+Timer timer = new Timer();
+private double time;
+    public CommandWait(double amount) {
+    	time = amount;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	timer.reset();
+    	timer.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -22,7 +26,7 @@ public class Dump extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return timer.get() >= time;
     }
 
     // Called once after isFinished returns true

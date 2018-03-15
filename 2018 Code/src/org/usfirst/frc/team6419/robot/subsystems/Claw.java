@@ -1,14 +1,13 @@
 package org.usfirst.frc.team6419.robot.subsystems;
 
 import org.usfirst.frc.team6419.robot.RobotMap;
-import org.usfirst.frc.team6419.robot.commands.ClawDefaultCommand;
 
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ *@deprecated
  */
 public class Claw extends Subsystem {
 VictorSP claw;
@@ -29,7 +28,6 @@ public void stop() {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new ClawDefaultCommand());
     }
 }
 

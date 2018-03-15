@@ -19,6 +19,10 @@ public TopIntake() {
 public void set(double power) {
 	motor.set(power);
 }
+public void set(boolean out) {
+	if(out)motor.set(.7);
+	else motor.set(-.7);
+}
 public void stop() {
 	motor.stopMotor();
 }

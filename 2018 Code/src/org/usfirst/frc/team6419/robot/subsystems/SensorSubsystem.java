@@ -2,7 +2,7 @@ package org.usfirst.frc.team6419.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 /**
- *Contains all of the sensors in the robot.
+*@deprecated
  */
 public class SensorSubsystem extends Subsystem {
 

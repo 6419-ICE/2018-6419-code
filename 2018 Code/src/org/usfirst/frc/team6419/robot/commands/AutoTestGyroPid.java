@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TestGyroPid extends AutonomousCommandGroup {
-	public TestGyroPid() {
-		addSequential(new PidTurn(90));
+public class AutoTestGyroPid extends AutoBaseLine {
+	public AutoTestGyroPid() {
+		addSequential(new CommandPidTurn(90));
 		
 	}
 @Override

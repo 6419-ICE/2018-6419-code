@@ -1,13 +1,26 @@
 package org.usfirst.frc.team6419.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class Red extends CommandGroup {
+public class AutoFarLeft extends CommandGroup {
 
-    public Red() {
+    public AutoFarLeft() {
+    	if(DriverStation.getInstance().getGameSpecificMessage().charAt(0) == 'L') {
+    		addSequential(new CommandEncoderDrive(-168));
+    		addSequential(new CommandPidTurn(90));
+    		addSequential(new CommandEncoderDrive(-20));
+    		addSequential(new CommandDump());
+    		addSequential(new CommandEncoderDrive(20));
+    		addSequential(new CommandPidTurn(-90));
+    		addSequential(new CommandEncoderDrive(-127));
+    	}
+    	else {
+    		addSequential(new CommandEncoderDrive(-295));
+    	}
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

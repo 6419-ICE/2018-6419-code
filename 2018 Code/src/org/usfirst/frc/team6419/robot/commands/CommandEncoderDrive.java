@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class EncoderDrive extends Command {
+public class CommandEncoderDrive extends Command {
 	double distance;
 	//private final int ticksPerInch = 682;
-    public EncoderDrive(double inches) {
+    public CommandEncoderDrive(double inches) {
     	
     	requires(Robot.chassis);
     	distance = inches * .96;
@@ -41,8 +41,8 @@ public class EncoderDrive extends Command {
     	Robot.chassis.startDrivePid(distance);
 
     	SmartDashboard.putNumber("Encoder Drive Error: ", Robot.chassis.getAverageError());
-    	SmartDashboard.putNumber("Left Encoder: ", Robot.chassis.getLeftDistance());
-    	SmartDashboard.putNumber("Right Encoder", Robot.chassis.getRightDistance());
+    	SmartDashboard.putNumber("Left Encoder: ", Robot.chassis.getLeftPosition());
+    	SmartDashboard.putNumber("Right Encoder", Robot.chassis.getRightPosition());
 
 
     	

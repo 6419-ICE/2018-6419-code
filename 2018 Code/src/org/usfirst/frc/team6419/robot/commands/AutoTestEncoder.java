@@ -8,15 +8,15 @@ import edu.wpi.first.wpilibj.DriverStation;
 /**
  *
  */
-public class TestEncoder extends CommandGroup {
+public class AutoTestEncoder extends CommandGroup {
 
-    public TestEncoder() {
-    	addSequential(new EncoderDrive(-10));
-    	addSequential(new Wait(1));
-    	addSequential(new PidTurn((DriverStation.getInstance().getGameSpecificMessage().charAt(0) == 'L')?
+    public AutoTestEncoder() {
+    	addSequential(new CommandEncoderDrive(-10));
+    	addSequential(new CommandWait(1));
+    	addSequential(new CommandPidTurn((DriverStation.getInstance().getGameSpecificMessage().charAt(0) == 'L')?
     			30 : -30));
-    	addSequential(new Wait(1));
-    	addSequential(new EncoderDrive(-60));
+    	addSequential(new CommandWait(1));
+    	addSequential(new CommandEncoderDrive(-60));
     	// Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

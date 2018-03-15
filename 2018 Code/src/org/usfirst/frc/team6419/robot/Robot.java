@@ -8,7 +8,6 @@
 package org.usfirst.frc.team6419.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -16,13 +15,16 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team6419.robot.commands.AutonomousCommandGroup;
-import org.usfirst.frc.team6419.robot.commands.GameAuto;
-import org.usfirst.frc.team6419.robot.commands.TeleopCommand;
-import org.usfirst.frc.team6419.robot.commands.TestEncoder;
-import org.usfirst.frc.team6419.robot.commands.TestGyroPid;
+import org.usfirst.frc.team6419.robot.commands.AutoCenter;
+import org.usfirst.frc.team6419.robot.commands.AutoFarLeft;
+import org.usfirst.frc.team6419.robot.commands.AutoFarRight;
+import org.usfirst.frc.team6419.robot.commands.AutoNearLeft;
+import org.usfirst.frc.team6419.robot.commands.AutoNearRight;
+import org.usfirst.frc.team6419.robot.commands.CommandEncoderDrive;
+import org.usfirst.frc.team6419.robot.commands.TeleopControls;
+import org.usfirst.frc.team6419.robot.commands.AutoTestEncoder;
+import org.usfirst.frc.team6419.robot.commands.AutoTestGyroPid;
 import org.usfirst.frc.team6419.robot.subsystems.Chassis;
-import org.usfirst.frc.team6419.robot.subsystems.Claw;
 import org.usfirst.frc.team6419.robot.subsystems.Elevator;
 import org.usfirst.frc.team6419.robot.subsystems.Intake;
 import org.usfirst.frc.team6419.robot.subsystems.TopIntake;
@@ -41,7 +43,7 @@ public class Robot extends TimedRobot {
 	public static Intake intake;
 	public static TopIntake topIntake;
 	public static OI m_oi;
-	TeleopCommand command;
+	TeleopControls command;
 	Command m_autonomousCommand;
 	SendableChooser<String> m_chooser;
 	
@@ -55,29 +57,30 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		
 		
-
+//Initialize all subsystems
 		chassis = new Chassis();
 		elevator = new Elevator();
 		intake = new Intake();
-	//	claw = new Claw();
 		topIntake = new TopIntake();
 		m_oi = new OI();
-
-		m_chooser = new SendableChooser<>();
-
+//Create a chooser for the autonomous modes.
+		m_chooser = new SendableChooser<String>();
+		m_chooser.addObject("Far Left Auto", "auto1");
+		m_chooser.addObject("Near Left Auto", "auto2");
+		m_chooser.addObject("Center Auto", "auto3");
+		m_chooser.addObject("Right Auto", "auto 4");
+		m_chooser.addObject("Far Right Auto", "auto5");
 		m_chooser.addObject("Test Gyro", "TGP");
-			m_chooser.addObject("Test Encoder", "TE");
+		m_chooser.addObject("Test Encoder", "TE");
+//Add data to the shuffleboard	
 		SmartDashboard.putData("Chooser:", m_chooser);
-		command = new TeleopCommand();
+		command = new TeleopControls();
 		LiveWindow.add(chassis);
 		LiveWindow.add(elevator);
 		LiveWindow.add(intake);
 		LiveWindow.add(topIntake);
-	//	LiveWindow.add(claw);
-	//	System.out.println("adding chooser");
-		//CameraServer.getInstance().startAutomaticCapture();
-		System.out.println("AUTO CHOOSER: " + m_chooser);
-//		m_autonomousCommand =(Command) m_chooser.getSelected();
+// Add camera to the shuffleboard.		
+		CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	/**
@@ -109,39 +112,36 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
-//		m_chooser.addObject("Test Gyro", new TestGyroPid());
-//			m_chooser.addObject("Test Encoder", new TestEncoder());
 		chassis.resetGyro();
-//		m_autonomousCommand = m_chooser.getSelected();
+// Initialize the Command group to use based off of position.
 		switch (m_chooser.getSelected()) {
 		case "TGP":
-			m_autonomousCommand = new TestGyroPid();
+			m_autonomousCommand = new AutoTestGyroPid();
 			break;
 		case "TE":
-			m_autonomousCommand = new TestEncoder();
+			m_autonomousCommand = new AutoTestEncoder();
 			break;
+		case "auto1":
+			m_autonomousCommand = new AutoFarLeft();
+			break;
+		case "auto2":
+			m_autonomousCommand = new AutoNearLeft();
+		case "auto3":
+			m_autonomousCommand = new AutoCenter();
+			break;
+		case "auto4":
+			m_autonomousCommand = new AutoNearRight();
+			break;
+		case "auto5":
+			m_autonomousCommand = new AutoFarRight();
+			break;
+		default:
+			m_autonomousCommand = new CommandEncoderDrive(140);
 		}
-		 String gameData = DriverStation.getInstance().getGameSpecificMessage();
-		ScaleInformation.setPOSITION( DriverStation.getInstance().getLocation());
-		ScaleInformation.setAlliance(DriverStation.getInstance().getAlliance());
-		char switchPosition, scalePosition, opponentSwitchLocation;
-		 
-		 switchPosition = gameData.charAt(0);
-		 scalePosition = gameData.charAt(1);
-		 opponentSwitchLocation = gameData.charAt(2);
-		 ScaleInformation.setSWITCH_LOCATION(switchPosition);
-		 ScaleInformation.setSCALE_LOCATION(scalePosition);
-		 ScaleInformation.setOPPONENT_SWITCH_LOCATION(opponentSwitchLocation);
+		
 
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// schedule the autonomous command (example)
+	
+		// schedule the autonomous command
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}

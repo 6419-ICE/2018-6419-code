@@ -1,32 +1,39 @@
 package org.usfirst.frc.team6419.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team6419.robot.Robot;
+
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
+
 /**
  *
  */
-public class Wait extends Command {
-Timer timer = new Timer();
-private double time;
-    public Wait(double amount) {
-    	time = amount;
+public class CommandDump extends Command {
+	Timer timer = new Timer();
+    public CommandDump() {
+    	requires(Robot.topIntake);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	timer.reset();
     	timer.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    }
+    	if(timer.get() <= .25) {
+    		Robot.topIntake.set(.7);
+    	}
+    	else {
+    		Robot.topIntake.set(-.7);
+    	}
+    	}
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return timer.get() >= time;
+        return timer.get() >= .50;
     }
 
     // Called once after isFinished returns true

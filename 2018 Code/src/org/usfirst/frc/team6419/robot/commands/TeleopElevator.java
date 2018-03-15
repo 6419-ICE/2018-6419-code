@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ManualElevator extends Command {
+public class TeleopElevator extends Command {
 private double liftSpeed;
 private double intakeSpeed;
 private double clawSpeed;
 
-    public ManualElevator() {
+    public TeleopElevator() {
     	requires(Robot.elevator);
     	requires(Robot.intake);
     	

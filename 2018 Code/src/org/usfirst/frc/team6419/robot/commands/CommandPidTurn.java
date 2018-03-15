@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class PidTurn extends Command {
+public class CommandPidTurn extends Command {
 double degrees;
-	public PidTurn(double degrees) {
+	public CommandPidTurn(double degrees) {
 		this.degrees = degrees;
 
 		

@@ -1,14 +1,31 @@
 package org.usfirst.frc.team6419.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class GameAuto extends CommandGroup {
+public class AutoNearLeft extends CommandGroup {
 
-    public GameAuto(int pos) {
-    	addSequential(new GoToSwitch(pos));
+    public AutoNearLeft() {
+    	if(DriverStation.getInstance().getGameSpecificMessage().charAt(0) == 'L') {
+    		addSequential(new CommandEncoderDrive(-140));
+    		addSequential(new CommandDump());
+    	}
+    	else { 
+    		addSequential(new CommandEncoderDrive(-10));
+    		addSequential(new CommandPidTurn(90));
+    		addSequential(new CommandEncoderDrive(-106.5));
+    		addSequential(new CommandPidTurn(-90));
+    		addSequential(new CommandEncoderDrive(-130));
+    		addSequential(new CommandPidTurn(-45));
+    		addSequential(new CommandEncoderDrive(-15));
+    		addSequential(new CommandDump());
+    	
+    	}
+    
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

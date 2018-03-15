@@ -13,14 +13,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class TeleopCommand extends Command {
+public class TeleopControls extends Command {
 	DifferentialDrive chassisDrive;
-	ManualElevator liftCommand;
-    public TeleopCommand() {
+	TeleopElevator liftCommand;
+    public TeleopControls() {
     	requires(Robot.chassis);
     	requires(Robot.elevator);
     	requires(Robot.topIntake);
-    	liftCommand = new ManualElevator();
+    	liftCommand = new TeleopElevator();
     }
     
 
@@ -30,7 +30,6 @@ public class TeleopCommand extends Command {
     	liftCommand.initialize();
     	Robot.chassis.resetEncoders();
     	chassisDrive = Robot.chassis.getDrive();
-    	Robot.chassis.initTeleop();
 
     }
 
@@ -44,16 +43,18 @@ public class TeleopCommand extends Command {
     	
     	chassisDrive.arcadeDrive(-drive.getRawAxis(1)/driveThrottle, drive.getRawAxis(2)/driveThrottle, true);
     
-    	liftCommand.teleopControls();
-    	liftCommand.execute();
+    //	liftCommand.teleopControls();
+   // 	liftCommand.execute();
+    	Robot.intake.setPOV(drive.getPOV());
+    	
     	if(drive.getRawButton(9))
     		Robot.topIntake.set(.7);
     	else if (drive.getRawButton(10))
     		Robot.topIntake.set(-.7);
     	else
     		Robot.topIntake.stop();
-    	SmartDashboard.putNumber("Left Encoder: ", Robot.chassis.getLeftDistance());
-    	SmartDashboard.putNumber("Right Encoder", Robot.chassis.getRightDistance());
+    	SmartDashboard.putNumber("Left Encoder: ", Robot.chassis.getLeftPosition());
+    	SmartDashboard.putNumber("Right Encoder", Robot.chassis.getRightPosition());
     	
     	SmartDashboard.putData(chassisDrive);
 SmartDashboard.putNumber("Gyro heading", Robot.chassis.getHeading());
