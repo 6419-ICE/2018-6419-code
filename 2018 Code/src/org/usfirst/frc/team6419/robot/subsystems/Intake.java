@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ *This subsystem is the wheel that brings in the blocks to our robot.
  */
 public class Intake extends Subsystem {
 VictorSP intakeWheel;
@@ -14,9 +14,18 @@ public Intake() {
 	this.setName("Intake");
 	intakeWheel = new VictorSP(RobotMap.INTAKE_MOTOR);
 }
+/**
+ * Sets the raw power to the intake wheel.
+ * @param power
+ */
 public void set(double power) {
 	intakeWheel.set(power);
 }
+/**
+ * Sets the power based off the POV position passed in.
+ * @param POV The POV number to be used, where -1<= POV < 360
+ * 
+ */
 public void setPOV(double POV) {
 	if((POV < 90 && POV>= 0)|| POV > 270) {
 		set(.4);

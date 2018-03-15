@@ -43,8 +43,8 @@ public class TeleopControls extends Command {
     	
     	chassisDrive.arcadeDrive(-drive.getRawAxis(1)/driveThrottle, drive.getRawAxis(2)/driveThrottle, true);
     
-    //	liftCommand.teleopControls();
-   // 	liftCommand.execute();
+    	liftCommand.teleopControls();
+    	liftCommand.execute();
     	Robot.intake.setPOV(drive.getPOV());
     	
     	if(drive.getRawButton(9))
@@ -53,6 +53,7 @@ public class TeleopControls extends Command {
     		Robot.topIntake.set(-.7);
     	else
     		Robot.topIntake.stop();
+    		
     	SmartDashboard.putNumber("Left Encoder: ", Robot.chassis.getLeftPosition());
     	SmartDashboard.putNumber("Right Encoder", Robot.chassis.getRightPosition());
     	

@@ -4,16 +4,21 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ * This is for position 2 on the field; in the near left position.
  */
 public class AutoNearLeft extends CommandGroup {
 
-    public AutoNearLeft() {
-    	if(DriverStation.getInstance().getGameSpecificMessage().charAt(0) == 'L') {
+    public AutoNearLeft() 
+    {
+//   If the switch is on the left, then do this.
+    	if(DriverStation.getInstance().getGameSpecificMessage().charAt(0) == 'L')
+    	{
     		addSequential(new CommandEncoderDrive(-140));
     		addSequential(new CommandDump());
     	}
-    	else { 
+// Otherwise do this.   	
+    	else 
+    	{ 
     		addSequential(new CommandEncoderDrive(-10));
     		addSequential(new CommandPidTurn(90));
     		addSequential(new CommandEncoderDrive(-106.5));
@@ -26,21 +31,6 @@ public class AutoNearLeft extends CommandGroup {
     	}
     
     	
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
 
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
     }
 }

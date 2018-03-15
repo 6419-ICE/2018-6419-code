@@ -7,7 +7,8 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * This command is used in teleop command to separate the controls for the chassis and the elevator for the sake
+ * of readability.
  */
 public class TeleopElevator extends Command {
 private double liftSpeed;

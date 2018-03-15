@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoBaseLine extends CommandGroup {
 	public AutoBaseLine() {
-		//hopefully Drives 30 inches forward.
+		// drives straight at the switch.
 		addSequential(new CommandEncoderDrive(-160));
 		
 		//test commit

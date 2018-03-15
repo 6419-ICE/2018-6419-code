@@ -12,11 +12,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * This subsystem consists of the linear slide used to lift the blocks up and down on our robot.
+ * 
  */
 public class Elevator extends PIDSubsystem {
 	Encoder liftEncoder;
-private	VictorSP upThingy, downThingy;
+private	VictorSP upMotor, downMotor;
 //private boolean close;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -24,10 +25,10 @@ private	VictorSP upThingy, downThingy;
 
 public Elevator() {
 	super("Elevator", 2, 0, 0);
-	upThingy = new VictorSP(RobotMap.UP_LIFT);
-	upThingy.setInverted(true);
+	upMotor = new VictorSP(RobotMap.UP_LIFT);
+	upMotor.setInverted(true);
 	
-	downThingy = new VictorSP(RobotMap.DOWN_LIFT);  //pulling the elevator down makes this motor go clockwise
+	downMotor = new VictorSP(RobotMap.DOWN_LIFT);  //pulling the elevator down makes this motor go clockwise
 	 liftEncoder = new Encoder(RobotMap.LIFT_ENCODER_CHANNEL_A, RobotMap.LIFT_ENCODER_CHANNEL_B);
 	 liftEncoder.reset();
 	 
@@ -39,10 +40,10 @@ public Elevator() {
     }
     
     public void set(double amount) {
-    	upThingy.set(amount);
+    	upMotor.set(amount);
     }
     public void stopLift() {
-    	upThingy.setSpeed(0);
+    	upMotor.setSpeed(0);
     }
   
     public void resetEncoder() {
@@ -57,7 +58,7 @@ public Elevator() {
 	}
 	@Override
 	protected void usePIDOutput(double output) {
-		upThingy.set(output);
+		upMotor.set(output);
 	}
 
 }

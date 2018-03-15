@@ -8,10 +8,14 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * Turns the chassis using a PID loop.
  */
 public class CommandPidTurn extends Command {
 double degrees;
+/**
+ * 
+ * @param degrees The amount of rotation for the robot to turn in degrees. Positive is clockwise.
+ */
 	public CommandPidTurn(double degrees) {
 		this.degrees = degrees;
 

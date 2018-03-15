@@ -189,7 +189,7 @@ public void initEncoderDriveMotors() {
 
 /**
  * This starts the motors to drive forward a specified number of inches.
- * @param inches
+ * @param inches the number of inches for the robot to drive straight for.
  */
 public void startDrivePid(double inches) {
 	inches = inches *TICKS_TO_INCH;

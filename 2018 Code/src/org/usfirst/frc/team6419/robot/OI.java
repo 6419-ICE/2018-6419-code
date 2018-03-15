@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team6419.robot;
 
-import org.usfirst.frc.team6419.robot.commands.CommandUseClaw;
 import org.usfirst.frc.team6419.robot.triggers.ExampleTrigger;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -27,8 +26,6 @@ public class OI {
 
 		button12 = new JoystickButton(joystick2, 12);
 		JoystickButton button11 = new JoystickButton(joystick2, 11);
-		button11.whileActive(new CommandUseClaw(false));
-		button12.whileActive(new CommandUseClaw(true));
 		
 		
 		

@@ -4,11 +4,12 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- *
+ * This is for position 5 on the field; on the far right.
  */
 public class AutoFarRight extends CommandGroup {
 
     public AutoFarRight() {
+// If the switch is on the left, do this.   	
     	if(DriverStation.getInstance().getGameSpecificMessage().charAt(0) == 'L') {
     		addSequential(new CommandEncoderDrive(-168));
     		addSequential(new CommandPidTurn(-90));
@@ -18,24 +19,10 @@ public class AutoFarRight extends CommandGroup {
     		addSequential(new CommandPidTurn(90));
     		addSequential(new CommandEncoderDrive(-127));
     	}
+//  Otherwise, just go straight to the edge.  	
     	else {
     		addSequential(new CommandEncoderDrive(-295));
     	}
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
+     
     }
 }

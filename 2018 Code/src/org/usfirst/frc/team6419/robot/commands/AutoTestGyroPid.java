@@ -9,6 +9,9 @@ public class AutoTestGyroPid extends AutoBaseLine {
 	public AutoTestGyroPid() {
 		addSequential(new CommandPidTurn(90));
 		
+		addSequential(new CommandPidTurn(-90));
+
+		
 	}
 @Override
 public String toString() {
