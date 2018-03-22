@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team6419.robot;
 
-import org.usfirst.frc.team6419.robot.triggers.ExampleTrigger;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -24,8 +23,6 @@ public class OI {
 	public JoystickButton button12;
 	public OI() {
 
-		button12 = new JoystickButton(joystick2, 12);
-		JoystickButton button11 = new JoystickButton(joystick2, 11);
 		
 		
 		

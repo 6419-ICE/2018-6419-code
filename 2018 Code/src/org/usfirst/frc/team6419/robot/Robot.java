@@ -7,11 +7,21 @@
 
 package org.usfirst.frc.team6419.robot;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoMode.PixelFormat;
-import edu.wpi.first.wpilibj.CameraServer;
+
+import org.usfirst.frc.team6419.robot.commands.AutoCenter;
+import org.usfirst.frc.team6419.robot.commands.AutoFarLeft;
+import org.usfirst.frc.team6419.robot.commands.AutoFarRight;
+import org.usfirst.frc.team6419.robot.commands.AutoNearLeft;
+import org.usfirst.frc.team6419.robot.commands.AutoNearRight;
+import org.usfirst.frc.team6419.robot.commands.AutoTestEncoder;
+import org.usfirst.frc.team6419.robot.commands.AutoTestGyroPid;
+import org.usfirst.frc.team6419.robot.commands.CommandEncoderDrive;
+import org.usfirst.frc.team6419.robot.commands.TeleopControls;
+import org.usfirst.frc.team6419.robot.subsystems.Chassis;
+import org.usfirst.frc.team6419.robot.subsystems.Elevator;
+import org.usfirst.frc.team6419.robot.subsystems.Intake;
+import org.usfirst.frc.team6419.robot.subsystems.TopIntake;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -20,21 +30,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.opencv.core.Mat;
-import org.usfirst.frc.team6419.robot.commands.AutoCenter;
-import org.usfirst.frc.team6419.robot.commands.AutoFarLeft;
-import org.usfirst.frc.team6419.robot.commands.AutoFarRight;
-import org.usfirst.frc.team6419.robot.commands.AutoNearLeft;
-import org.usfirst.frc.team6419.robot.commands.AutoNearRight;
-import org.usfirst.frc.team6419.robot.commands.CommandEncoderDrive;
-import org.usfirst.frc.team6419.robot.commands.TeleopControls;
-import org.usfirst.frc.team6419.robot.commands.AutoTestEncoder;
-import org.usfirst.frc.team6419.robot.commands.AutoTestGyroPid;
-import org.usfirst.frc.team6419.robot.subsystems.Chassis;
-import org.usfirst.frc.team6419.robot.subsystems.Elevator;
-import org.usfirst.frc.team6419.robot.subsystems.Intake;
-import org.usfirst.frc.team6419.robot.subsystems.TopIntake;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -46,7 +41,6 @@ import org.usfirst.frc.team6419.robot.subsystems.TopIntake;
 public class Robot extends TimedRobot {
 	public static Chassis chassis;
 	public static Elevator elevator;
-//	public static Claw claw;
 	public static Intake intake;
 	public static TopIntake topIntake;
 	public static OI m_oi;
@@ -171,9 +165,9 @@ public class Robot extends TimedRobot {
 			System.out.println("Auto 5");
 			m_autonomousCommand = new AutoFarRight();
 			break;
-//		default:
-//			m_autonomousCommand = new CommandEncoderDrive(140);
-//			break;
+		default:
+			m_autonomousCommand = new CommandEncoderDrive(140);
+			break;
 		}
 		
 
