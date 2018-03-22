@@ -10,6 +10,7 @@ public class AutoNearLeft extends CommandGroup {
 
     public AutoNearLeft() 
     {
+    	System.out.println("auto near left");
 //   If the switch is on the left, then do this.
     	if(DriverStation.getInstance().getGameSpecificMessage().charAt(0) == 'L')
     	{

@@ -7,14 +7,21 @@
 
 package org.usfirst.frc.team6419.robot;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.opencv.core.Mat;
 import org.usfirst.frc.team6419.robot.commands.AutoCenter;
 import org.usfirst.frc.team6419.robot.commands.AutoFarLeft;
 import org.usfirst.frc.team6419.robot.commands.AutoFarRight;
@@ -80,7 +87,7 @@ public class Robot extends TimedRobot {
 		LiveWindow.add(intake);
 		LiveWindow.add(topIntake);
 // Add camera to the shuffleboard.		
-		CameraServer.getInstance().startAutomaticCapture();
+
 	}
 
 	/**
@@ -113,34 +120,64 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		chassis.resetGyro();
+		Timer gameDataTimer = new Timer();
+		gameDataTimer.reset();
+		gameDataTimer.start();
+		
+		String gameData = DriverStation.getInstance().getGameSpecificMessage();
+		
+		gameData = ("NULL".equalsIgnoreCase(gameData)) ? null : gameData;
+
+		while(true) {
+			gameData = DriverStation.getInstance().getGameSpecificMessage();
+			gameData = ("NULL".equalsIgnoreCase(gameData)) ? null : gameData;
+			
+			if(gameData == null && gameDataTimer.get() < 0.2) {
+				Timer.delay(.02);
+			}
+			else {
+				break;
+			}
+		
+		}
+
 // Initialize the Command group to use based off of position.
 		switch (m_chooser.getSelected()) {
 		case "TGP":
+			System.out.println("Test gyro pid");
 			m_autonomousCommand = new AutoTestGyroPid();
 			break;
 		case "TE":
+			System.out.println("Test encoder");
 			m_autonomousCommand = new AutoTestEncoder();
 			break;
 		case "auto1":
+			System.out.println("Auto 1");
 			m_autonomousCommand = new AutoFarLeft();
 			break;
 		case "auto2":
+			System.out.println("Auto 2");
 			m_autonomousCommand = new AutoNearLeft();
+			break;
 		case "auto3":
-			m_autonomousCommand = new AutoCenter();
+			System.out.println("Auto 3");
+			m_autonomousCommand = new AutoCenter();		
 			break;
 		case "auto4":
+			System.out.println("Auto 4");
 			m_autonomousCommand = new AutoNearRight();
 			break;
 		case "auto5":
+			System.out.println("Auto 5");
 			m_autonomousCommand = new AutoFarRight();
 			break;
-		default:
-			m_autonomousCommand = new CommandEncoderDrive(140);
+//		default:
+//			m_autonomousCommand = new CommandEncoderDrive(140);
+//			break;
 		}
 		
 
-	
+		System.out.println("Command: " +m_autonomousCommand.getName());
 		// schedule the autonomous command
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
@@ -158,6 +195,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		chassis.resetGyro();
+
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove

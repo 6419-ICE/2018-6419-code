@@ -10,6 +10,7 @@ public class AutoFarLeft extends CommandGroup {
 
     public AutoFarLeft() 
     {
+    	System.out.println("auto far left");
 // If the driver station is on the left, do this.   	
     	if(DriverStation.getInstance().getGameSpecificMessage().charAt(0) == 'L')
     	{

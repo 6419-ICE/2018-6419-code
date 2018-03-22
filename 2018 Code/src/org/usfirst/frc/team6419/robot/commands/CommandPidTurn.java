@@ -28,7 +28,7 @@ double degrees;
 			Robot.chassis.enable();
 
 			Robot.chassis.setSetpoint(degrees);
-
+			Robot.chassis.resetGyro();
 		}
 		@Override 
 		public void execute() {

@@ -169,12 +169,12 @@ public void initDrivePid() {
 // Sets the P, I, D, and F coefficients for the controller.
 	leftFront.config_kF(pidSlot, 0.0, timeout);
 	leftFront.config_kP(pidSlot, 2, timeout);
-	leftFront.config_kI(pidSlot, 0.0, timeout);
+	leftFront.config_kI(pidSlot, 0.0045, timeout);
 	leftFront.config_kD(pidSlot, 0.0, timeout);
 //config pid: This is the pid that will be used for the robot.
 	rightFront.config_kF(pidSlot, 0.0, timeout);
 	rightFront.config_kP(pidSlot, 2, timeout);
-	rightFront.config_kI(pidSlot, 0.0, timeout);
+	rightFront.config_kI(pidSlot, 0.0045, timeout);
 	rightFront.config_kD(pidSlot, 0.0, timeout);
 }
 /**
@@ -193,7 +193,6 @@ public void initEncoderDriveMotors() {
  */
 public void startDrivePid(double inches) {
 	inches = inches *TICKS_TO_INCH;
-	System.out.println("Inches:  " +inches);
 	leftFront.set(ControlMode.Position, inches);
 	rightFront.set(ControlMode.Position, -inches);
 
@@ -274,8 +273,8 @@ public double getRightSpeed() {
  * Sets the left and right encoders' positions to 0.
  */
 public void resetEncoders() {
-	leftFront.setSelectedSensorPosition(0, 0, 0);
-	rightFront.setSelectedSensorPosition(0, 0, 0);
+	leftFront.setSelectedSensorPosition(0, 0, 10);
+	rightFront.setSelectedSensorPosition(0, 0, 10);
 }
 /**
  * 

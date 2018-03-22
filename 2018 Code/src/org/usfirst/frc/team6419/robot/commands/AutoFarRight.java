@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoFarRight extends CommandGroup {
 
     public AutoFarRight() {
+    	System.out.println("auto far right");
 // If the switch is on the left, do this.   	
     	if(DriverStation.getInstance().getGameSpecificMessage().charAt(0) == 'L') {
     		addSequential(new CommandEncoderDrive(-168));

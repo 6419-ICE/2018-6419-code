@@ -23,20 +23,18 @@ public class CommandEncoderDrive extends Command {
 // It seems that the robot consistently goes 4% to far, so we accounted for that error by factoring 
 // that out using multiplication. 
     	distance = inches * .96;
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
    
-    	System.out.println("Encoder Drive Starting");
+    	System.out.println("Encoder Drive Starting ");
     	Robot.chassis.resetEncoders();
-    	Robot.chassis.resetEncoders();
-    	Robot.chassis.resetEncoders();
-    	Robot.chassis.resetEncoders();
+//    	Robot.chassis.resetEncoders();
+//    	Robot.chassis.resetEncoders();
+//    	Robot.chassis.resetEncoders();
     	Robot.chassis.initEncoderDriveMotors();
-    	Robot.chassis.startDrivePid(distance);
+//    	Robot.chassis.startDrivePid(distance);
 
 
     }
@@ -53,7 +51,7 @@ public class CommandEncoderDrive extends Command {
     }
 
     protected boolean isFinished() {
-    	return Math.abs(Robot.chassis.getRightError()) < 20;
+    	return Math.abs(Robot.chassis.getRightError()) < 10;
     	//   	return Robot.chassis.getAverageError() < 400;
     	//    	return Robot.chassis.getError() < 3 && Robot.chassis.getError() > -3;
         

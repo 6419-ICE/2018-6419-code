@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoNearRight extends CommandGroup {
 
     public AutoNearRight() {
+    	System.out.println("auto near right");
 // If the switch is to the right, do this.    	
     	if(DriverStation.getInstance().getGameSpecificMessage().charAt(0) == 'R') 
     	{
